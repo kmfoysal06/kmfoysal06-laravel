@@ -45,6 +45,12 @@ class PostController extends Controller
         return view('posts.show', compact('post'));
     }
 
+    public function edit(string $id)
+    {
+        $post = \App\Models\Post::findOrFail($id);
+        return view('posts.edit', compact('post'));
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -53,7 +59,6 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'slug' => 'required|string|unique:posts,slug,' . $id,
         ]);
         $post = \App\Models\Post::findOrFail($id);
         $post->update($request->all());
